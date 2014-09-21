@@ -95,7 +95,33 @@ end
 
 \chapter{Appearance}
 \section{Write lines not longer than 120 characters}
+Long lines of code tend to get difficult to read. If your lines get longer than 120 characters, reconsider what you are writing. In fact, most statements should fit into a line of 80 characters. Maybe there is a better way to express what you want to do. If you still need longer lines, break them up, indenting them further than the next statement.
+
+This rule does not apply to continuous text e.g. in HTML. Breaking up continuous text can lead to strange diffs where changing a single word could put a whole paragraph into the diff.
+
 \section{Write one statement per line}
+On the other hand, do not cram statements into one line until it reaches its length limit. One statement per line allows for good readability. Compare:
+
+\nonconforming{}
+\begin{cppBox}
+auto a = 1; auto p = nullptr; auto b = a;
+\end{cppBox}
+\begin{luaBox}
+local a = 1 local p = 0 local b = a + 1
+\end{luaBox}
+
+\conforming{}
+\begin{cppBox}
+auto a = 1;
+auto p = nullptr;
+auto b = a + 1;
+\end{cppBox}
+\begin{luaBox}
+local a = 1
+local p = 0
+local b = a + 1
+\end{luaBox}
+
 \section{Frame code blocks with one line on each end}
 \section{Space}
 \subsection{Indent four spaces inside code blocks}
