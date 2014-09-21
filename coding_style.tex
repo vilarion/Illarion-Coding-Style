@@ -1,8 +1,31 @@
-\documentclass[a4paper,10pt]{scrreprt}
+\documentclass[a4paper,11pt,parskip=half+]{scrreprt}
 \usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage{courier}
+\usepackage{graphicx}
+\usepackage[noadjust]{marginnote}
+
+\lstset{basicstyle=\footnotesize\ttfamily,breaklines=true}
 
 \textwidth16cm \oddsidemargin0cm \evensidemargin0cm \topmargin-1cm
 \textheight21cm
+\reversemarginpar
+
+\lstnewenvironment{cpp}
+{\lstset{language={[11]C++},title=C++}}
+{}
+
+\lstnewenvironment{lua}
+{\lstset{language={[5.2]Lua},title=Lua}}
+{}
+
+\newcommand{\conforming}{
+\marginnote{\hfill\includegraphics[width=0.5\marginparwidth]{pics/yes}}[1.5cm]
+}
+
+\newcommand{\nonconforming}{
+\marginnote{\hfill\includegraphics[width=0.5\marginparwidth]{pics/no}}[1.5cm]
+}
 
 \begin{document}
 \title{Illarion Coding Style\\0.0}
@@ -11,15 +34,70 @@
 \maketitle
 \tableofcontents
 
-\chapter{Formatting}
+\chapter{Introduction}
+The team of Illarion developers has grown over time. And while everyone has their preferred coding style, it is useful to agree on a single one. This makes it easier for others to read your code, understand and modify it. These rules do not only cover the appearance of code, but also how the coding itself is performed, which functionality to use or avoid and best practices.
+
+There are many languages involved in Illarion development. They range from mark-up languages like HTML or the typesetting language \LaTeX\ to a whole array of different programming languages like C++, Java, Lua, PHP or GLSL. Examples given, either conforming or non-conforming, will be in C++ and Lua. You can easily derive how they would look like in the language you are currently using. Rules are designed to be as general as possible to apply to most languages used in Illarion development.
+
+Examples are tagged with icons to annotate whether or not they are conforming. Non-conforming examples are designed such, that only the current issue is being violated. They are correct in every other aspect, so that you can focus on the issue at hand.
+
+This is what correct examples look like:
+
+\par\conforming
+\begin{minipage}[t]{0.5\linewidth}
+\begin{cpp}
+for (auto &item: items) {
+    item.age();
+}
+\end{cpp}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.5\linewidth}
+\begin{lua}
+for _, item in pairs(items) do
+    item.age()
+end
+\end{lua}
+\end{minipage}
+
+
+A violating example looks like this:
+
+\par\nonconforming
+\begin{minipage}[t]{0.5\linewidth}
+\begin{cpp}
+for (auto &item: items)
+{
+    item.age();
+}
+\end{cpp}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.5\linewidth}
+\begin{lua}
+for _, item in pairs(items)
+do
+    item.age()
+end
+\end{lua}
+\end{minipage}
+
+
+\chapter{Appearance}
 \section{Write lines not longer than 120 characters}
-\section{Indent four spaces inside code blocks}
-\section{Avoid trailing white space}
-\section{Use camelCase for variables}
-\section{Use proper English}
-\section{Include copyright header}
 \section{Write one statement per line}
-\section{Space in functions and lists}
+\section{Frame code blocks with one line on each end}
+\section{Space}
+\subsection{Indent four spaces inside code blocks}
+\subsection{Use space after a delimiter}
+\subsection{Use space before and after binary operators}
+\subsection{Avoid space after function names}
+\subsection{Avoid trailing white space}
+\section{Use camelCase for variable names}
+\section{Use TitelCase for class names}
+\section{Use proper British English}
+\section{Use block comments for copyright header}
+
 
 \chapter{Coding}
 \section{Select expressive names}
@@ -30,6 +108,7 @@
 \section{Keep it as local as possible}
 \section{Write short, expressive functions}
 \section{Avoid unnecessary code}
-\section{Use other control structures than goto}
+\section{Refrain from using goto}
+\section{Use correct copyright headers}
 
 \end{document}
