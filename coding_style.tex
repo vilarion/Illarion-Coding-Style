@@ -5,24 +5,46 @@
 \usepackage{listings}
 \usepackage[noadjust]{marginnote}
 \usepackage{lmodern}
-\usepackage{fixltx2e,microtype,ellipsis}
+\usepackage{fixltx2e,microtype,ellipsis,ragged2e}
 \usepackage{graphicx}
 \usepackage{pifont}
 \usepackage[scale=0.8]{geometry}
 \usepackage{color}
+\usepackage{MnSymbol}
+\usepackage{relsize}
 
 \reversemarginpar
 
-\lstset{basicstyle=\footnotesize\ttfamily,breaklines=true}
+\definecolor{commentColor}{rgb}{0,0.6,0}
+\definecolor{stringColor}{rgb}{0.58,0,0.82}
+
+\lstset{%
+    basicstyle=\footnotesize,%
+    breaklines=true,%
+    breakatwhitespace=true,%
+    postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\rcurvearrowse\space}},%
+    commentstyle=\color{commentColor},%
+    keywordstyle=\bfseries\color{blue},%
+    stringstyle=\color{stringColor}%
+}
 \lstloadlanguages{[11]C++,[5.2]Lua}
 
+\def\ifmonospace{\ifdim\fontdimen3\font=0pt}
+\def\Cpp{%
+\ifmonospace%
+    C++%
+\else%
+    \mbox{C\kern-.1667em\raise.30ex\hbox{\smaller{++}}}%
+\fi%
+\xspace}
+
 \lstnewenvironment{cpp}
-{\lstset{language={[11]C++},title=C++}}
+{\lstset{language={[11]C++},title=\Cpp}}
 {}
 
 \lstnewenvironment{cppBox}
-{\minipage[t]{0.48\linewidth}%
-\lstset{language={[11]C++},title=C++}}
+{\noindent\minipage[t]{0.48\linewidth}%
+\lstset{language={[11]C++},title=\Cpp}}
 {\endminipage}
 
 \lstnewenvironment{lua}
@@ -30,7 +52,7 @@
 {}
 
 \lstnewenvironment{luaBox}
-{\minipage[t]{0.48\linewidth}%
+{\noindent\minipage[t]{0.48\linewidth}%
 \lstset{language={[5.2]Lua},title=Lua}}
 {\endminipage}
 
@@ -59,7 +81,7 @@
 \chapter{Introduction}
 The team of Illarion developers has grown over time. And while everyone has their preferred coding style, it is useful to agree on a single one. This makes it easier for others to read your code, understand and modify it. These rules do not only cover the appearance of code, but also how the coding itself is performed, which functionality to use or avoid and best practices. The purpose of this document is not to hamper you in your coding efforts with an overly exhaustive set of rules, but to guide you towards clean code for the benefit of all.
 
-There are many languages involved in Illarion development. They range from mark-up languages like HTML or the typesetting language \LaTeX\ to a whole array of different programming languages like C++, Java, Lua, PHP or GLSL. Examples given, either conforming or non-conforming, will be in C++ and Lua. You can easily derive how they would look like in the language you are currently using. Rules are designed to be as general as possible to apply to most languages used in Illarion development.
+There are many languages involved in Illarion development. They range from mark-up languages like HTML or the typesetting language \LaTeX\ to a whole array of different programming languages like \Cpp, Java, Lua, PHP or GLSL. Examples given, either conforming or non-conforming, will be in \Cpp and Lua. You can easily derive how they would look like in the language you are currently using. Rules are designed to be as general as possible to apply to most languages used in Illarion development.
 
 Examples are tagged with icons to annotate whether or not they are conforming. Non-conforming examples are designed such, that only the current issue is being violated. They are correct in every other aspect, so that you can focus on the issue at hand.
 
