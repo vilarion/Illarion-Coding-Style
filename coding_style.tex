@@ -1,30 +1,51 @@
-\documentclass[a4paper,11pt,parskip=half+]{scrreprt}
+\documentclass[a4paper,11pt]{scrreprt}
 \usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
 \usepackage{listings}
-\usepackage{courier}
-\usepackage{graphicx}
 \usepackage[noadjust]{marginnote}
+\usepackage{lmodern}
+\usepackage{fixltx2e,microtype,ellipsis}
+\usepackage{graphicx}
+\usepackage{pifont}
+\usepackage[scale=0.8]{geometry}
+\usepackage{color}
+
+\reversemarginpar
 
 \lstset{basicstyle=\footnotesize\ttfamily,breaklines=true}
-
-\textwidth16cm \oddsidemargin0cm \evensidemargin0cm \topmargin-1cm
-\textheight21cm
-\reversemarginpar
+\lstloadlanguages{[11]C++,[5.2]Lua}
 
 \lstnewenvironment{cpp}
 {\lstset{language={[11]C++},title=C++}}
 {}
 
+\lstnewenvironment{cppBox}
+{\minipage[t]{0.48\linewidth}%
+\lstset{language={[11]C++},title=C++}}
+{\endminipage}
+
 \lstnewenvironment{lua}
 {\lstset{language={[5.2]Lua},title=Lua}}
 {}
 
-\newcommand{\conforming}{
-\marginnote{\hfill\includegraphics[width=0.5\marginparwidth]{pics/yes}}[1.5cm]
+\lstnewenvironment{luaBox}
+{\minipage[t]{0.48\linewidth}%
+\lstset{language={[5.2]Lua},title=Lua}}
+{\endminipage}
+
+\newcommand{\marginMarker}[1]{%
+\marginnote{%
+    \hfill%
+		\Huge{#1}%
+}[3\baselineskip]%
 }
 
-\newcommand{\nonconforming}{
-\marginnote{\hfill\includegraphics[width=0.5\marginparwidth]{pics/no}}[1.5cm]
+\newcommand{\conforming}{%
+\marginMarker{\textcolor{green}{\ding{51}}}%
+}
+
+\newcommand{\nonconforming}{%
+\marginMarker{\textcolor{red}{\ding{55}}}%
 }
 
 \begin{document}
@@ -43,45 +64,33 @@ Examples are tagged with icons to annotate whether or not they are conforming. N
 
 This is what correct examples look like:
 
-\par\conforming
-\begin{minipage}[t]{0.5\linewidth}
-\begin{cpp}
+\conforming{}
+\begin{cppBox}
 for (auto &item: items) {
     item.age();
 }
-\end{cpp}
-\end{minipage}
-\hfill
-\begin{minipage}[t]{0.5\linewidth}
-\begin{lua}
+\end{cppBox}
+\begin{luaBox}
 for _, item in pairs(items) do
     item.age()
 end
-\end{lua}
-\end{minipage}
-
+\end{luaBox}
 
 A violating example looks like this:
 
-\par\nonconforming
-\begin{minipage}[t]{0.5\linewidth}
-\begin{cpp}
+\nonconforming{}
+\begin{cppBox}
 for (auto &item: items)
 {
     item.age();
 }
-\end{cpp}
-\end{minipage}
-\hfill
-\begin{minipage}[t]{0.5\linewidth}
-\begin{lua}
+\end{cppBox}
+\begin{luaBox}
 for _, item in pairs(items)
 do
     item.age()
 end
-\end{lua}
-\end{minipage}
-
+\end{luaBox}
 
 \chapter{Appearance}
 \section{Write lines not longer than 120 characters}
