@@ -43,18 +43,18 @@
 {\lstset{language={[11]C++},title=\Cpp}}
 {}
 
-\lstnewenvironment{cppBox}
+\lstnewenvironment{cppBox}[1][]
 {\noindent\minipage[t]{0.48\linewidth}%
-\lstset{language={[11]C++},title=\Cpp}}
+\lstset{language={[11]C++},title=\Cpp,#1}}
 {\endminipage}
 
 \lstnewenvironment{lua}
 {\lstset{language={[5.2]Lua},title=Lua}}
 {}
 
-\lstnewenvironment{luaBox}
+\lstnewenvironment{luaBox}[1][]
 {\noindent\minipage[t]{0.48\linewidth}%
-\lstset{language={[5.2]Lua},title=Lua}}
+\lstset{language={[5.2]Lua},title=Lua,#1}}
 {\endminipage}
 
 \newcommand{\marginMarker}[1]{%
@@ -127,32 +127,228 @@ On the other hand, do not cram statements into one line until it reaches its len
 
 \nonconforming{}
 \begin{cppBox}
-auto a = 1; auto p = nullptr; auto b = a;
+auto strength = 10; auto wisdom = 8;
 \end{cppBox}
 \begin{luaBox}
-local a = 1 local p = 0 local b = a + 1
+local strength = 10 local wisdom = 8
 \end{luaBox}
 
 \conforming{}
 \begin{cppBox}
-auto a = 1;
-auto p = nullptr;
-auto b = a + 1;
+auto strength = 10;
+auto wisdom = 8;
 \end{cppBox}
 \begin{luaBox}
-local a = 1
-local p = 0
-local b = a + 1
+local strength = 10
+local wisdom = 8
 \end{luaBox}
 
 \section{Frame code blocks with one line on each end}
+Each local code block should be framed by one line on each end:
+
+\conforming{}
+\begin{cppBox}
+for (auto &item: items) {
+    item.age();
+}
+\end{cppBox}
+\begin{luaBox}
+for _, item in pairs(items) do
+    item.age()
+end
+\end{luaBox}
+
+\nonconforming{}
+\begin{cppBox}
+for (auto &item: items)
+{
+    item.age();
+}
+\end{cppBox}
+\begin{luaBox}
+for _, item in pairs(items)
+do
+    item.age()
+end
+\end{luaBox}
+
+\section{Seperate adjacent code blocks with an empty line}
+You can also use an empty line to structure logical groups.
+
+\conforming{}
+\begin{cppBox}
+auto minutes = 3;
+auto seconds = minutes * 60;
+
+for (auto &item: items) {
+    for (auto i = 0; i < 5; ++i) {
+        item.age(seconds);
+    }
+}
+\end{cppBox}
+\begin{luaBox}
+local minutes = 3
+local seconds = minutes * 60
+
+for _, item in pairs(items) do
+    for i = 1, 5 do
+        item.age(seconds)
+    end
+end
+\end{luaBox}
+
+\nonconforming{}
+\begin{cppBox}
+auto minutes = 3;
+auto seconds = minutes * 60;
+for (auto &item: items) {
+
+    for (auto i = 0; i < 5; ++i) {
+        item.age(seconds);
+    }
+}
+\end{cppBox}
+\begin{luaBox}
+local minutes = 3
+
+local seconds = minutes * 60
+for _, item in pairs(items) do
+    for i = 1, 5 do
+        item.age(seconds)
+    end
+end
+\end{luaBox}
+
 \section{Space}
 \subsection{Indent four spaces inside code blocks}
+Local code blocks have to be indented by four spaces. Do not use tabulators.
+
+\conforming{}
+\begin{cppBox}[showspaces]
+{
+    auto result = database.query();
+    result.validate();
+}
+\end{cppBox}
+\begin{luaBox}[showspaces]
+do
+    local npc = getNPC()
+    npc:talk("Hello!")
+end
+\end{luaBox}
+
 \subsection{Use space after a delimiter}
+Each delimiting character has to be followed by exactly one space:
+
+\conforming{}
+\begin{cppBox}[showspaces]
+for (const auto number: {42, 0, 1}) {
+    cout << number;
+}
+\end{cppBox}
+\begin{luaBox}[showspaces]
+for number in {1, 2, 3} do
+    print(number)
+end
+\end{luaBox}
+
+\nonconforming{}
+\begin{cppBox}[showspaces]
+for (const auto number:{42, 0, 1}) {
+    cout << number;
+}
+\end{cppBox}
+\begin{luaBox}[showspaces]
+for number in {1,2,3} do
+    print(number)
+end
+\end{luaBox}
+
 \subsection{Use space before and after binary operators}
+All binary operators have to be pre- and succeeded by one space:
+
+\conforming{}
+\begin{cppBox}[showspaces]
+cout << 1;
+auto i = 0;
+i += 2;
+auto b = 3 * i;
+\end{cppBox}
+\begin{luaBox}[showspaces]
+print("a" .. "b")
+local i = 0
+i = i + 2
+local b = 3 * i
+\end{luaBox}
+
+\nonconforming{}
+\begin{cppBox}[showspaces]
+cout<<1;
+auto i=0;
+i +=2;
+auto b =3*  i;
+\end{cppBox}
+\begin{luaBox}[showspaces]
+print("a".."b")
+local i =0
+i =i+ 2
+local b= 3  * i
+\end{luaBox}
+
 \subsection{Avoid space after function names}
+This speaks for itself:
+
+\conforming{}
+\begin{cppBox}[showspaces]
+std::move(object);
+\end{cppBox}
+\begin{luaBox}[showspaces]
+print(1)
+\end{luaBox}
+
+\nonconforming{}
+\begin{cppBox}[showspaces]
+std::move (object);
+\end{cppBox}
+\begin{luaBox}[showspaces]
+print (1)
+\end{luaBox}
+
 \subsection{Avoid trailing white space}
-\section{Use camelCase for variable names}
+White space at the end of a line will produce strange diffs, so make sure you do not insert any:
+
+\section{Use camelCase for variable and function names}
+Use camelCase for variable and function names:
+
+\conforming{}
+\begin{cppBox}
+int playerCounter;
+Player destroyerOfWorlds;
+void fooBar();
+\end{cppBox}
+\begin{luaBox}
+local playerCounter
+local robertOppenheimer
+
+function fooBar()
+end
+\end{luaBox}
+
+\nonconforming{}
+\begin{cppBox}
+int playercounter;
+Player destroyer_Of_Worlds;
+void foo_bar();
+\end{cppBox}
+\begin{luaBox}
+local playercounter
+local robert_Oppenheimer
+
+function foo_bar()
+end
+\end{luaBox}
+
+
 \section{Use TitleCase for class names}
 \section{Use proper British English}
 \section{Use block comments for copyright header}
