@@ -647,7 +647,7 @@ end
 </td></tr><tr><td>:x:</td><td>
 
 ```cpp
-int taskInterval = 60; -- 60 what?
+int taskInterval = 60; // 60 what?
 addUnsignedCharToBuffer(((data >> 8) & 255));
 return (player);
 ```
