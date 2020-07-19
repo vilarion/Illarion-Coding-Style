@@ -298,7 +298,7 @@ end
 ```
 </td></tr></table>
 
-<a name="f-pace-binary"></a>
+<a name="f-space-binary"></a>
 ### Use space before and after binary operators
 
 All binary operators have to be pre- and succeeded by one space:
@@ -337,7 +337,7 @@ local b= 3 * i
 ```
 </td></tr></table>
 
-<a name="f-pace-function"></a>
+<a name="f-space-function"></a>
 ### Avoid space after function names
 
 This speaks for itself:
@@ -455,7 +455,7 @@ you write. Once we decided to use British English as official staff language, so
 applies to all written code. Small mistakes might and will happen, but that is no excuse to be lazy
 about it. Use a dictionary if you are not sure.
 
-<a name="f-f-license"></a>
+<a name="f-license"></a>
 ### Use block comments for license headers
 
 Using block comments for license headers at the beginning of each file allows editors to fold them,
@@ -620,21 +620,23 @@ they are not supposed to do, it gets difficult to understand them or reason abou
 ### Avoid unnecessary code and magic numbers
 
 Be precise in what you write. Write enough so that the code is clear and meaningful, but do not be
-verbose.
+verbose. Sometimes it is not enought to give a magic number a name, but you might need to change its type as well
+to better reflect its content.
 
 <table><tr><td></td><td>C++</td><td>Lua</td><tr><td>:heavy_check_mark:</td><td>
 
 ```cpp
+auto taskInterval = std::chrono::seconds(60);
+addUnsignedCharToBuffer(((data >> CHAR_BIT) & UCHAR_MAX));
 return player;
 ```
 </td><td>
 
 ```lua
-a = 0
-i = a * 3 + 2
+activePlayers = 0
 local strength = getAttribute(Character.strength)
 
-if i == 4 then
+if attribute == Character.dexterity then
     ...
 end
 
@@ -645,6 +647,8 @@ end
 </td></tr><tr><td>:x:</td><td>
 
 ```cpp
+int taskInterval = 60; -- 60 what?
+addUnsignedCharToBuffer(((data >> 8) & 255));
 return (player);
 ```
 </td><td>
