@@ -620,7 +620,7 @@ they are not supposed to do, it gets difficult to understand them or reason abou
 ### Avoid unnecessary code and magic numbers
 
 Be precise in what you write. Write enough so that the code is clear and meaningful, but do not be
-verbose. Sometimes it is not enought to give a magic number a name, but you might need to change its type as well
+verbose. Sometimes it is not enough to give a magic number a name, but you might need to change its type as well
 to better reflect its content.
 
 <table><tr><td></td><td>C++</td><td>Lua</td><tr><td>:heavy_check_mark:</td><td>
